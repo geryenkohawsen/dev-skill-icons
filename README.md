@@ -1,32 +1,28 @@
-# React + TypeScript + Vite
+# Dev Skill Icons
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A community-maintained SVG icon library for developers. The initial foundation serves an original sample icon at `/icons/sample.svg`.
 
-Currently, two official plugins are available:
+## Local development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Use Node.js 24 and npm.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```sh
+npm ci
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+To check the production output and serve it on local Wrangler:
+
+```sh
+npm run lint
+npm run build
+npx wrangler dev
+```
+
+Open `/icons/sample.svg` on the URL printed by Wrangler to check the standalone SVG response.
+
+## Hosting
+
+Wrangler publishes `dist/` as Workers Static Assets. Keep Cloudflare's default browser revalidation for stable icon URLs so clients can pick up revised SVG files. See [Cloudflare's static asset headers](https://developers.cloudflare.com/workers/static-assets/headers/).
+
+Once deployment is approved, connect the GitHub repository through Workers Builds. Use the Worker name in `wrangler.jsonc`, `main` as the production branch, `npm run build` as the build command, and `npx wrangler deploy` as the deploy command. See [Workers Builds configuration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/).
