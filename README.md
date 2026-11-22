@@ -1,6 +1,8 @@
 # Dev Skill Icons
 
-A community-maintained SVG icon library for developers. The initial foundation serves an original sample icon at `/icons/sample.svg`.
+A community-maintained SVG icon library for developers. The gallery includes four original sample icons with search, category filters, light and dark previews, and download and copy actions.
+
+Copied HTML and Markdown embed the SVG as a link back to the gallery homepage.
 
 ## Local development
 
