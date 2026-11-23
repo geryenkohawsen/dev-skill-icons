@@ -1,8 +1,33 @@
 # Dev Skill Icons
 
-A community-maintained SVG icon library for developers. The gallery includes four original sample icons with search, category filters, light and dark previews, and download and copy actions.
+A community-maintained SVG icon library for developer portfolios and GitHub READMEs.
 
-Copied HTML and Markdown embed the SVG as a link back to the gallery homepage.
+[Browse the icon gallery](https://dev-skill-icons.geryenkohawsen.workers.dev/)
+
+## Example
+
+<img src="./public/icons/sample.svg" width="48" height="48" alt="Code Brackets">
+<img src="./public/icons/terminal.svg" width="48" height="48" alt="Terminal">
+<img src="./public/icons/database.svg" width="48" height="48" alt="Database">
+<img src="./public/icons/branch.svg" width="48" height="48" alt="Branch">
+
+Paste this into your GitHub README to show a Terminal icon that links back to the gallery.
+
+```markdown
+[![Terminal](https://dev-skill-icons.geryenkohawsen.workers.dev/icons/terminal.svg)](https://dev-skill-icons.geryenkohawsen.workers.dev/)
+```
+
+## Use the gallery
+
+1. Search by name or filter by category.
+2. Compare the light and dark previews.
+3. Choose **Download SVG**, **Copy URL**, **Copy HTML**, or **Copy Markdown**.
+
+The HTML and Markdown link the icon back to the gallery.
+
+## Contribute
+
+Request an icon or report a problem through [GitHub Issues](https://github.com/geryenkohawsen/dev-skill-icons/issues). For SVG and logo sourcing conventions, see [AGENTS.md](AGENTS.md).
 
 ## Local development
 
@@ -13,7 +38,7 @@ npm ci
 npm run dev
 ```
 
-To check the production output and serve it on local Wrangler:
+Build and preview the production site with local Wrangler.
 
 ```sh
 npm run lint
@@ -25,6 +50,6 @@ Open `/icons/sample.svg` on the URL printed by Wrangler to check the standalone 
 
 ## Hosting
 
-Wrangler publishes `dist/` as Workers Static Assets. Keep Cloudflare's default browser revalidation for stable icon URLs so clients can pick up revised SVG files. See [Cloudflare's static asset headers](https://developers.cloudflare.com/workers/static-assets/headers/).
+Wrangler serves `dist/` as Workers Static Assets. Stable icon URLs use [Cloudflare’s default browser revalidation](https://developers.cloudflare.com/workers/static-assets/headers/) so clients can pick up revised SVGs.
 
-Once deployment is approved, connect the GitHub repository through Workers Builds. Use the Worker name in `wrangler.jsonc`, `main` as the production branch, `npm run build` as the build command, and `npx wrangler deploy` as the deploy command. See [Workers Builds configuration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/).
+[Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/) builds and deploys from `main` using `npm run build` and `npx wrangler deploy`.
