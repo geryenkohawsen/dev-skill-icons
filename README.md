@@ -6,24 +6,28 @@ A community-maintained SVG icon library for developer portfolios and GitHub READ
 
 ## Example
 
-<img src="./public/icons/sample.svg" width="48" height="48" alt="Code Brackets">
-<img src="./public/icons/terminal.svg" width="48" height="48" alt="Terminal">
-<img src="./public/icons/database.svg" width="48" height="48" alt="Database">
-<img src="./public/icons/branch.svg" width="48" height="48" alt="Branch">
+<img src="./public/icons/react.svg" width="48" height="48" alt="React">
+<img src="./public/icons/python.svg" width="48" height="48" alt="Python">
+<img src="./public/icons/typescript.svg" width="48" height="48" alt="TypeScript">
+<img src="./public/icons/docker.svg" width="48" height="48" alt="Docker">
 
-Paste this into your GitHub README to show a Terminal icon that links back to the gallery.
+Paste this into your GitHub README to show a React icon that links back to the gallery.
 
 ```markdown
-[![Terminal](https://dev-skill-icons.geryenkohawsen.workers.dev/icons/terminal.svg)](https://dev-skill-icons.geryenkohawsen.workers.dev/)
+[![React](https://dev-skill-icons.geryenkohawsen.workers.dev/icons/react.svg)](https://dev-skill-icons.geryenkohawsen.workers.dev/)
 ```
 
 ## Use the gallery
 
 1. Search by name or filter by category.
-2. Compare the light and dark previews.
+2. Compare light and dark previews where both are available.
 3. Choose **Download SVG**, **Copy URL**, **Copy HTML**, or **Copy Markdown**.
 
-The HTML and Markdown link the icon back to the gallery. The default SVG is at `/icons/{slug}.svg`. Use `/icons/{slug}-light.svg` for the light version.
+The HTML and Markdown link the icon back to the gallery. The default SVG is at `/icons/{slug}.svg`. Icons with a light variant also have a `/icons/{slug}-light.svg` URL.
+
+## Attribution
+
+The gallery SVGs come from [Skill Icons by tandpfun](https://github.com/tandpfun/skill-icons) and include its [MIT copyright and permission notice](public/skill-icons-license.txt). Third-party logos and trademarks belong to their respective owners. Check each brand’s terms for your intended use.
 
 ## Contribute
 
@@ -46,7 +50,7 @@ npm run build
 npx wrangler dev
 ```
 
-Open `/icons/sample.svg` on the URL printed by Wrangler to check the standalone SVG response.
+Open `/icons/react.svg` on the URL printed by Wrangler to check the standalone SVG response.
 
 ## Hosting
 

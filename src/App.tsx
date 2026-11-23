@@ -4,7 +4,7 @@ import { icons } from './icons'
 
 const categories = [...new Set(icons.map((icon) => icon.category))].sort()
 const fieldClass =
-  'min-h-11 w-full rounded-lg border border-control bg-paper px-3 text-base placeholder:text-muted'
+  'min-h-11 w-full rounded-lg border border-control bg-white px-3 text-base placeholder:text-muted'
 
 function App() {
   const [query, setQuery] = useState('')
@@ -14,7 +14,7 @@ function App() {
   const searchInput = useRef<HTMLInputElement>(null)
   const terms = query.trim().toLowerCase().split(/\s+/)
   const results = icons.filter((icon) => {
-    const searchable = [icon.name, icon.slug, icon.category, ...icon.aliases].join(' ').toLowerCase()
+    const searchable = [icon.name, icon.slug, icon.category, ...(icon.aliases ?? [])].join(' ').toLowerCase()
     return (!category || category === icon.category) && terms.every((term) => searchable.includes(term))
   })
 
@@ -78,7 +78,7 @@ function App() {
             role="search"
             aria-label="Icon gallery"
             data-hidden={filtersHidden || undefined}
-            className="gallery-filters pointer-events-auto grid gap-4 bg-canvas px-2 py-3 sm:grid-cols-[1fr_14rem]"
+            className="gallery-filters pointer-events-auto grid gap-4 bg-white px-2 py-3 sm:grid-cols-[1fr_14rem]"
           >
             <div>
               <label htmlFor="icon-search" className="mb-2 block text-sm font-medium">Search icons</label>
@@ -87,7 +87,7 @@ function App() {
                 ref={searchInput}
                 type="search"
                 className={fieldClass}
-                placeholder="Try terminal, SQL, or Git"
+                placeholder="Try React, Python, or Docker"
                 value={query}
                 onChange={(event) => setQuery(event.currentTarget.value)}
               />
@@ -124,14 +124,14 @@ function App() {
         </div>
 
         <p ref={resultsSummary} role="status" className="mt-3 mb-3 text-sm tabular-nums text-muted">
-          {results.length} of {icons.length} sample icons
+          {results.length} of {icons.length} icons
         </p>
         {results.length > 0 ? (
           <ul role="list" aria-label="Icons" className="grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {results.map((icon) => <IconCard key={icon.slug} icon={icon} />)}
           </ul>
         ) : (
-          <div className="rounded-xl border border-line bg-paper p-6">
+          <div className="rounded-xl border border-line bg-white p-6">
             <h3 className="text-lg font-semibold">No matching icons</h3>
             <p className="mt-1 text-sm text-muted">Try a different search or category.</p>
             <button
@@ -147,6 +147,11 @@ function App() {
             </button>
           </div>
         )}
+        <p className="mt-8 text-sm text-muted">
+          Icons from <a className="underline underline-offset-4" href="https://github.com/tandpfun/skill-icons">Skill Icons</a>
+          {' · '}
+          <a className="underline underline-offset-4" href="/skill-icons-license.txt">MIT license</a>
+        </p>
       </section>
     </main>
   )

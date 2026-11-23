@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { Icon } from './icons'
 
 const actionClass =
-  'inline-grid size-11 place-items-center rounded-md border border-control hover:bg-canvas'
+  'inline-grid size-11 place-items-center rounded-md border border-control hover:bg-hover'
 
 const actionPaths = {
   Download: 'M12 3v12m-4-4 4 4 4-4M4 16v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4',
@@ -45,15 +45,17 @@ export function IconCard({ icon }: { icon: Icon }) {
   }
 
   return (
-    <li className="min-w-0 overflow-hidden rounded-xl border border-line bg-paper">
-      <div className="grid grid-cols-2 divide-x divide-line border-b border-line bg-canvas text-muted">
-        <div className="grid justify-items-center gap-2 px-3 py-5">
-          <img src={`/icons/${icon.slug}-light.svg`} width="56" height="56" alt="" loading="lazy" />
-          <span className="text-xs font-medium">Light</span>
-        </div>
+    <li className="min-w-0 overflow-hidden rounded-xl border border-line bg-white">
+      <div className={`grid divide-x divide-line border-b border-line text-muted ${icon.hasLight ? 'grid-cols-2' : 'grid-cols-1'}`}>
+        {icon.hasLight && (
+          <div className="grid justify-items-center gap-2 px-3 py-5">
+            <img src={`/icons/${icon.slug}-light.svg`} width="56" height="56" alt="" loading="lazy" />
+            <span className="text-xs font-medium">Light</span>
+          </div>
+        )}
         <div className="grid justify-items-center gap-2 px-3 py-5">
           <img src={path} width="56" height="56" alt="" loading="lazy" />
-          <span className="text-xs font-medium">Dark</span>
+          <span className="text-xs font-medium">{icon.hasLight ? 'Dark' : 'Default'}</span>
         </div>
       </div>
 

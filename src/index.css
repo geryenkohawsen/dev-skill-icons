@@ -1,9 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-canvas: #f8f3ea;
   --color-hero: #efe4d2;
-  --color-paper: #fffdf8;
+  --color-hover: #f8f3ea;
   --color-line: #dfd4c4;
   --color-control: #918271;
   --color-ink: #30271e;
@@ -13,7 +12,7 @@
 
 @layer base {
   :root {
-    @apply scheme-light bg-canvas text-ink scroll-pt-48 sm:scroll-pt-28;
+    @apply scheme-light bg-white text-ink scroll-pt-48 sm:scroll-pt-28;
   }
 
   :focus-visible {
