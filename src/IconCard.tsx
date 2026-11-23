@@ -2,7 +2,22 @@ import { useState } from 'react'
 import type { Icon } from './icons'
 
 const actionClass =
-  'inline-flex min-h-11 items-center justify-center rounded-md border border-zinc-300 px-1 text-center text-[0.8125rem] font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800'
+  'inline-grid size-11 place-items-center rounded-md border border-control hover:bg-canvas'
+
+const actionPaths = {
+  Download: 'M12 3v12m-4-4 4 4 4-4M4 16v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4',
+  URL: 'M10 13a4 4 0 0 0 5.7 0l3.3-3.3a4 4 0 1 0-5.7-5.7l-1.4 1.4m2.1 5.6a4 4 0 0 0-5.7 0L5 14.3a4 4 0 1 0 5.7 5.7l1.4-1.4',
+  HTML: 'm7 7-5 5 5 5m10-10 5 5-5 5M14 5l-4 14',
+  Markdown: 'M3 18V6h18v12H3Zm3-3V9l3 3 3-3v6m5-6v6m-2-2 2 2 2-2',
+}
+
+function ActionIcon({ action }: { action: keyof typeof actionPaths }) {
+  return (
+    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path d={actionPaths[action]} />
+    </svg>
+  )
+}
 
 const copyFormats = ['URL', 'HTML', 'Markdown'] as const
 
@@ -30,24 +45,24 @@ export function IconCard({ icon }: { icon: Icon }) {
   }
 
   return (
-    <li className="min-w-0 overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
-      <div className="grid grid-cols-2 border-b border-zinc-200 dark:border-zinc-800">
-        <div className="grid justify-items-center gap-2 bg-zinc-100 px-3 py-5 text-zinc-700">
-          <img src={path} width="56" height="56" alt="" loading="lazy" />
+    <li className="min-w-0 overflow-hidden rounded-xl border border-line bg-paper">
+      <div className="grid grid-cols-2 divide-x divide-line border-b border-line bg-canvas text-muted">
+        <div className="grid justify-items-center gap-2 px-3 py-5">
+          <img src={`/icons/${icon.slug}-light.svg`} width="56" height="56" alt="" loading="lazy" />
           <span className="text-xs font-medium">Light</span>
         </div>
-        <div className="grid justify-items-center gap-2 bg-zinc-950 px-3 py-5 text-zinc-300">
+        <div className="grid justify-items-center gap-2 px-3 py-5">
           <img src={path} width="56" height="56" alt="" loading="lazy" />
           <span className="text-xs font-medium">Dark</span>
         </div>
       </div>
 
       <div className="p-4">
-        <h2 className="text-lg font-semibold tracking-tight">{icon.name}</h2>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{icon.category}</p>
-        <div className="mt-4 grid grid-cols-2 gap-2">
-          <a className={actionClass} href={path} download aria-label={`Download SVG for ${icon.name}`}>
-            Download SVG
+        <h3 className="text-lg font-semibold tracking-tight">{icon.name}</h3>
+        <p className="mt-1 text-sm text-muted">{icon.category}</p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          <a className={actionClass} href={path} download aria-label={`Download SVG for ${icon.name}`} title="Download SVG">
+            <ActionIcon action="Download" />
           </a>
           {copyFormats.map((format) => (
             <button
@@ -55,18 +70,19 @@ export function IconCard({ icon }: { icon: Icon }) {
               type="button"
               className={`${actionClass} cursor-pointer`}
               aria-label={`Copy ${format} for ${icon.name}`}
+              title={`Copy ${format}`}
               onClick={() => void copy(format)}
             >
-              Copy {format}
+              <ActionIcon action={format} />
             </button>
           ))}
         </div>
-        <p role="status" className="mt-3 min-h-5 text-sm text-zinc-600 dark:text-zinc-400">
+        <p role="status" className="mt-3 min-h-5 text-sm text-muted">
           {feedback?.message}
         </p>
         {feedback?.text && (
           <input
-            className="mt-2 w-full rounded-md border border-zinc-300 px-2 py-2 font-mono text-xs dark:border-zinc-700"
+            className="mt-2 w-full rounded-md border border-control px-2 py-2 font-mono text-xs"
             aria-label={`Copyable text for ${icon.name}`}
             value={feedback.text}
             readOnly

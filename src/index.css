@@ -1,11 +1,33 @@
 @import 'tailwindcss';
 
+@theme {
+  --color-canvas: #f8f3ea;
+  --color-hero: #efe4d2;
+  --color-paper: #fffdf8;
+  --color-line: #dfd4c4;
+  --color-control: #918271;
+  --color-ink: #30271e;
+  --color-muted: #665849;
+  --color-accent: #4c583a;
+}
+
 @layer base {
   :root {
-    @apply scheme-light-dark bg-zinc-50 text-zinc-950 dark:bg-zinc-950 dark:text-zinc-50;
+    @apply scheme-light bg-canvas text-ink scroll-pt-48 sm:scroll-pt-28;
   }
 
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-teal-700 dark:outline-teal-300;
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+}
+
+.gallery-filters[data-hidden]:not(:focus-within) {
+  translate: 0 -100%;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gallery-filters:not(:focus-within) {
+    transition: translate 180ms ease-out;
   }
 }

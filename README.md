@@ -23,7 +23,7 @@ Paste this into your GitHub README to show a Terminal icon that links back to th
 2. Compare the light and dark previews.
 3. Choose **Download SVG**, **Copy URL**, **Copy HTML**, or **Copy Markdown**.
 
-The HTML and Markdown link the icon back to the gallery.
+The HTML and Markdown link the icon back to the gallery. The default SVG is at `/icons/{slug}.svg`. Use `/icons/{slug}-light.svg` for the light version.
 
 ## Contribute
 
