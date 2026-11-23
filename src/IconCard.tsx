@@ -21,8 +21,8 @@ function ActionIcon({ action }: { action: keyof typeof actionPaths }) {
 
 const copyFormats = ['URL', 'HTML', 'Markdown'] as const
 
-export function IconCard({ icon }: { icon: Icon }) {
-  const [feedback, setFeedback] = useState<{ message: string; text?: string }>()
+export function IconCard({ icon, onAction }: { icon: Icon; onAction: (message: string) => void }) {
+  const [fallbackText, setFallbackText] = useState('')
   const path = `/icons/${icon.slug}.svg`
 
   async function copy(format: (typeof copyFormats)[number]) {
@@ -38,24 +38,24 @@ export function IconCard({ icon }: { icon: Icon }) {
 
     try {
       await navigator.clipboard.writeText(text)
-      setFeedback({ message: `${format} copied.` })
+      setFallbackText('')
+      onAction(`${format} copied.`)
     } catch {
-      setFeedback({ message: `Couldn’t copy ${format}. Select and copy the text below.`, text })
+      setFallbackText(text)
+      onAction(`Couldn’t copy ${format}. Select and copy the text in the card.`)
     }
   }
 
   return (
     <li className="min-w-0 overflow-hidden rounded-xl border border-line bg-white">
-      <div className={`grid divide-x divide-line border-b border-line text-muted ${icon.hasLight ? 'grid-cols-2' : 'grid-cols-1'}`}>
+      <div className={`grid divide-x divide-line border-b border-line ${icon.hasLight ? 'grid-cols-2' : 'grid-cols-1'}`}>
         {icon.hasLight && (
-          <div className="grid justify-items-center gap-2 px-3 py-5">
+          <div className="grid justify-items-center px-3 py-5">
             <img src={`/icons/${icon.slug}-light.svg`} width="56" height="56" alt="" loading="lazy" />
-            <span className="text-xs font-medium">Light</span>
           </div>
         )}
-        <div className="grid justify-items-center gap-2 px-3 py-5">
+        <div className="grid justify-items-center px-3 py-5">
           <img src={path} width="56" height="56" alt="" loading="lazy" />
-          <span className="text-xs font-medium">{icon.hasLight ? 'Dark' : 'Default'}</span>
         </div>
       </div>
 
@@ -63,7 +63,14 @@ export function IconCard({ icon }: { icon: Icon }) {
         <h3 className="text-lg font-semibold tracking-tight">{icon.name}</h3>
         <p className="mt-1 text-sm text-muted">{icon.category}</p>
         <div className="mt-4 flex flex-wrap gap-2">
-          <a className={actionClass} href={path} download aria-label={`Download SVG for ${icon.name}`} title="Download SVG">
+          <a
+            className={actionClass}
+            href={path}
+            download
+            aria-label={`Download SVG for ${icon.name}`}
+            title="Download SVG"
+            onClick={() => onAction('SVG download started.')}
+          >
             <ActionIcon action="Download" />
           </a>
           {copyFormats.map((format) => (
@@ -79,14 +86,11 @@ export function IconCard({ icon }: { icon: Icon }) {
             </button>
           ))}
         </div>
-        <p role="status" className="mt-3 min-h-5 text-sm text-muted">
-          {feedback?.message}
-        </p>
-        {feedback?.text && (
+        {fallbackText && (
           <input
             className="mt-2 w-full rounded-md border border-control px-2 py-2 font-mono text-xs"
             aria-label={`Copyable text for ${icon.name}`}
-            value={feedback.text}
+            value={fallbackText}
             readOnly
             onFocus={(event) => event.currentTarget.select()}
           />

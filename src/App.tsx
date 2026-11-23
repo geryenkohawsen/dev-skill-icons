@@ -10,6 +10,8 @@ function App() {
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState('')
   const [filtersHidden, setFiltersHidden] = useState(false)
+  const [toast, setToast] = useState('')
+  const lastToast = useRef('')
   const resultsSummary = useRef<HTMLParagraphElement>(null)
   const searchInput = useRef<HTMLInputElement>(null)
   const terms = query.trim().toLowerCase().split(/\s+/)
@@ -17,6 +19,19 @@ function App() {
     const searchable = [icon.name, icon.slug, icon.category, ...(icon.aliases ?? [])].join(' ').toLowerCase()
     return (!category || category === icon.category) && terms.every((term) => searchable.includes(term))
   })
+
+  function showToast(message: string) {
+    // Keep identical actions announceable in the same live region.
+    const announcement = lastToast.current === message ? `${message}\u00a0` : message
+    lastToast.current = announcement
+    setToast(announcement)
+  }
+
+  useEffect(() => {
+    if (!toast) return
+    const timeout = window.setTimeout(() => setToast(''), 4000)
+    return () => window.clearTimeout(timeout)
+  }, [toast])
 
   useEffect(() => {
     let previousY = Math.max(0, window.scrollY)
@@ -128,7 +143,7 @@ function App() {
         </p>
         {results.length > 0 ? (
           <ul role="list" aria-label="Icons" className="grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {results.map((icon) => <IconCard key={icon.slug} icon={icon} />)}
+            {results.map((icon) => <IconCard key={icon.slug} icon={icon} onAction={showToast} />)}
           </ul>
         ) : (
           <div className="rounded-xl border border-line bg-white p-6">
@@ -153,6 +168,10 @@ function App() {
           <a className="underline underline-offset-4" href="/skill-icons-license.txt">MIT license</a>
         </p>
       </section>
+
+      <div role="status" className="pointer-events-none fixed inset-x-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-20 flex justify-center">
+        {toast && <p className="max-w-sm rounded-lg bg-ink px-4 py-3 text-sm font-medium text-white shadow-md">{toast}</p>}
+      </div>
     </main>
   )
 }
